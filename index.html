@@ -1,18 +1,14 @@
-<!-- redeploy -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Nandhu ❤️</title>
-
+<title>Happy Birthday & Valentine, Nandhu ❤️</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap');
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin:0; padding:0; }
 
 body {
-  margin: 0;
   height: 100vh;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   display: flex;
@@ -20,6 +16,7 @@ body {
   align-items: center;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
+  cursor: default;
 }
 
 /* Floating hearts */
@@ -38,13 +35,13 @@ body {
 
 /* Card */
 .card {
-  background: rgba(255,255,255,0.96);
+  background: rgba(255,255,255,0.95);
   padding: 45px;
   border-radius: 28px;
-  max-width: 540px;
+  max-width: 580px;
   text-align: center;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
-  animation: popIn 1.2s ease;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+  animation: popIn 1s ease;
   z-index: 2;
 }
 
@@ -56,44 +53,56 @@ body {
 h1 {
   font-family: 'Pacifico', cursive;
   color: #ff4d6d;
-  font-size: 40px;
-  margin-bottom: 8px;
+  font-size: 44px;
+  margin-bottom: 10px;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .subtitle {
-  font-size: 17px;
+  font-size: 18px;
   color: #666;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 #typing {
   font-size: 18px;
   color: #333;
-  min-height: 70px;
+  min-height: 80px;
   margin-bottom: 25px;
   line-height: 1.6;
+}
+
+/* Valentine buttons */
+.valentine-buttons {
+  margin-top: 20px;
 }
 
 button {
   background: linear-gradient(135deg, #ff4d6d, #ff758c);
   color: white;
   border: none;
-  padding: 15px 32px;
+  padding: 14px 32px;
   border-radius: 30px;
   font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(255,77,109,0.5);
-  transition: transform 0.25s;
+  margin: 0 12px;
+  box-shadow: 0 12px 25px rgba(255,77,109,0.5);
+  transition: all 0.25s ease;
 }
 
 button:hover {
-  transform: scale(1.06);
+  transform: scale(1.08);
 }
 
-/* Love message */
 #loveMsg {
-  margin-top: 28px;
-  font-size: 28px;
+  margin-top: 30px;
+  font-size: 30px;
   font-weight: 700;
   color: #ff4d6d;
   display: none;
@@ -102,7 +111,7 @@ button:hover {
 
 @keyframes glow {
   from { text-shadow: 0 0 12px #ff7eb3; }
-  to { text-shadow: 0 0 30px #ff4d6d; }
+  to { text-shadow: 0 0 28px #ff4d6d; }
 }
 
 /* Confetti */
@@ -112,6 +121,7 @@ canvas {
   pointer-events: none;
   z-index: 1;
 }
+
 </style>
 </head>
 
@@ -120,32 +130,29 @@ canvas {
 <canvas id="confetti"></canvas>
 
 <div class="card">
-  <h1>Happy Birthday Nandhu ❤️</h1>
+  <h1>Happy Birthday & Valentine ❤️</h1>
   <div class="subtitle">To the girl who owns my heart 🌸</div>
 
   <div id="typing"></div>
 
-  <button onclick="startSurprise()">Open your surprise 🎁</button>
+  <div class="valentine-buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😅</button>
+  </div>
 
-  <div id="loveMsg">I love you, Nandhu 💖</div>
+  <div id="loveMsg">I love you, Nandhu ❤️💫</div>
 </div>
 
 <script>
-/* Typing effect (romantic text) */
-const text =
-  "Dear Nandhu… 💫\n\n" +
-  "Today is special, not just because it’s your birthday — " +
-  "but because the world was lucky enough to get YOU on this day. " +
-  "Your smile calms me, your voice feels like home, and loving you " +
-  "is my favorite thing to do every single day ❤️";
+/* Typing effect */
+const text = "Dear Nandhu… 💫\n\nToday is special, not just because it’s your birthday — but because the world was lucky enough to get YOU on this day. Your smile calms me, your voice feels like home, and loving you is my favorite thing to do every single day ❤️";
 
 let i = 0;
 function typeText() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML +=
-      text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+  if(i<text.length){
+    document.getElementById("typing").innerHTML += text.charAt(i)==="\n"?"<br>":text.charAt(i);
     i++;
-    setTimeout(typeText, 40);
+    setTimeout(typeText,35);
   }
 }
 typeText();
@@ -155,63 +162,78 @@ function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerText = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 18 + 18 + "px";
-  heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = Math.random()*18 + 18 + "px";
+  heart.style.animationDuration = Math.random()*3 + 4 + "s";
   document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 7000);
+  setTimeout(()=>heart.remove(),7000);
 }
-setInterval(createHeart, 450);
+setInterval(createHeart, 400);
 
 /* Confetti */
 const canvas = document.getElementById("confetti");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
 let confetti = [];
 
 function randomColor() {
-  const colors = ["#ff4d6d", "#ff7eb3", "#ffd1dc", "#ffffff"];
-  return colors[Math.floor(Math.random() * colors.length)];
+  const colors = ["#ff4d6d","#ff7eb3","#ffd1dc","#ffffff"];
+  return colors[Math.floor(Math.random()*colors.length)];
 }
 
-function startConfetti() {
-  for (let i = 0; i < 220; i++) {
+function startConfetti(){
+  for(let i=0;i<220;i++){
     confetti.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      r: Math.random() * 6 + 3,
-      d: Math.random() * 5 + 2,
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height - canvas.height,
+      r:Math.random()*6 + 3,
+      d:Math.random()*5 + 2,
       color: randomColor()
     });
   }
-  setInterval(drawConfetti, 20);
+  setInterval(drawConfetti,20);
 }
 
-function drawConfetti() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  confetti.forEach(p => {
+function drawConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  confetti.forEach(p=>{
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = p.color;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.color;
     ctx.fill();
     p.y += p.d;
-    if (p.y > canvas.height) {
-      p.y = -10;
-      p.x = Math.random() * canvas.width;
-    }
+    if(p.y>canvas.height){p.y=-10; p.x=Math.random()*canvas.width;}
   });
 }
 
-/* Surprise */
-function startSurprise() {
-  document.getElementById("loveMsg").style.display = "block";
-  startConfetti();
-}
+/* Valentine button logic */
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const loveMsg = document.getElementById("loveMsg");
 
-window.onresize = () => {
+// Yes button
+yesBtn.addEventListener("click",()=>{
+  loveMsg.style.display = "block";
+  startConfetti();
+  yesBtn.disabled = true;
+  noBtn.disabled = true;
+});
+
+// No button floats away when mouse approaches
+noBtn.addEventListener("mousemove", e=>{
+  const rect = noBtn.getBoundingClientRect();
+  const dx = e.clientX - (rect.left + rect.width/2);
+  const dy = e.clientY - (rect.top + rect.height/2);
+  const distance = Math.sqrt(dx*dx + dy*dy);
+  if(distance < 80){
+    const x = Math.random()*window.innerWidth - rect.width;
+    const y = Math.random()*window.innerHeight - rect.height;
+    noBtn.style.transform = `translate(${x - rect.left}px, ${y - rect.top}px)`;
+  }
+});
+
+window.onresize = ()=>{
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 };
