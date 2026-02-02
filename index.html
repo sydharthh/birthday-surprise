@@ -121,7 +121,6 @@ canvas {
   pointer-events: none;
   z-index: 1;
 }
-
 </style>
 </head>
 
@@ -220,18 +219,16 @@ yesBtn.addEventListener("click",()=>{
   noBtn.disabled = true;
 });
 
-// No button floats away when mouse approaches
-noBtn.addEventListener("mousemove", e=>{
-  const rect = noBtn.getBoundingClientRect();
-  const dx = e.clientX - (rect.left + rect.width/2);
-  const dy = e.clientY - (rect.top + rect.height/2);
-  const distance = Math.sqrt(dx*dx + dy*dy);
-  if(distance < 80){
-    const x = Math.random()*window.innerWidth - rect.width;
-    const y = Math.random()*window.innerHeight - rect.height;
-    noBtn.style.transform = `translate(${x - rect.left}px, ${y - rect.top}px)`;
-  }
-});
+// No button floats randomly automatically every 500ms
+setInterval(()=>{
+  const x = Math.random()*(window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random()*(window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}, 500);
+
+// Prevent clicking No
+noBtn.addEventListener("click",(e)=>{ e.preventDefault(); });
+noBtn.style.pointerEvents = "auto"; // yes, still reacts to movement but cannot be clicked
 
 window.onresize = ()=>{
   canvas.width = window.innerWidth;
