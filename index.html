@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Nandhu ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 22px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.6); opacity: 0; }
+}
+
+/* Card */
+.card {
+  background: rgba(255,255,255,0.96);
+  padding: 45px;
+  border-radius: 28px;
+  max-width: 540px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+  animation: popIn 1.2s ease;
+  z-index: 2;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  color: #ff4d6d;
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+#typing {
+  font-size: 18px;
+  color: #333;
+  min-height: 70px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+button {
+  background: linear-gradient(135deg, #ff4d6d, #ff758c);
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(255,77,109,0.5);
+  transition: transform 0.25s;
+}
+
+button:hover {
+  transform: scale(1.06);
+}
+
+/* Love message */
+#loveMsg {
+  margin-top: 28px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff4d6d;
+  display: none;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 12px #ff7eb3; }
+  to { text-shadow: 0 0 30px #ff4d6d; }
+}
+
+/* Confetti */
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+  <h1>Happy Birthday Nandhu ❤️</h1>
+  <div class="subtitle">To the girl who owns my heart 🌸</div>
+
+  <div id="typing"></div>
+
+  <button onclick="startSurprise()">Open your surprise 🎁</button>
+
+  <div id="loveMsg">I love you, Nandhu 💖</div>
+</div>
+
+<script>
+/* Typing effect (romantic text) */
+const text =
+  "Dear Nandhu… 💫\n\n" +
+  "Today is special, not just because it’s your birthday — " +
+  "but because the world was lucky enough to get YOU on this day. " +
+  "Your smile calms me, your voice feels like home, and loving you " +
+  "is my favorite thing to do every single day ❤️";
+
+let i = 0;
+function typeText() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML +=
+      text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+    i++;
+    setTimeout(typeText, 40);
+  }
+}
+typeText();
+
+/* Floating hearts */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 18 + 18 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 450);
+
+/* Confetti */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+function randomColor() {
+  const colors = ["#ff4d6d", "#ff7eb3", "#ffd1dc", "#ffffff"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function startConfetti() {
+  for (let i = 0; i < 220; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 3,
+      d: Math.random() * 5 + 2,
+      color: randomColor()
+    });
+  }
+  setInterval(drawConfetti, 20);
+}
+
+function drawConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  confetti.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    p.y += p.d;
+    if (p.y > canvas.height) {
+      p.y = -10;
+      p.x = Math.random() * canvas.width;
+    }
+  });
+}
+
+/* Surprise */
+function startSurprise() {
+  document.getElementById("loveMsg").style.display = "block";
+  startConfetti();
+}
+
+window.onresize = () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+};
+</script>
+
+</body>
+</html>
